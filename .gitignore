@@ -1,0 +1,10 @@
+.yml
+.yaml
+*/*.yml
+*/*.yaml
+**/*.yml
+**/*.yaml
+conf/*.yml
+conf/*.yaml
+
+env3/
