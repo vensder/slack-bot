@@ -8,3 +8,4 @@ conf/*.yml
 conf/*.yaml
 
 env3/
+.idea/
