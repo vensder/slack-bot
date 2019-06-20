@@ -9,3 +9,4 @@ conf/*.yaml
 
 env3/
 .idea/
+.vscode
