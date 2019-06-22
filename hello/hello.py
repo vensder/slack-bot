@@ -11,8 +11,6 @@ def hello(data, web_client):
         utc_now = datetime.utcnow()
         event_ts = data['event_ts']
         epoch_time = time()
-        # bots_info = web_client.bots_info()
-        # print(bots_info)
 
         web_client.chat_postMessage(
             channel=channel_id,
