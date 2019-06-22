@@ -16,7 +16,7 @@ def say_hello(**payload):
     print(data)
     print("="*80)
     web_client = payload['web_client']
-    rtm_client = payload['rtm_client']
+    # rtm_client = payload['rtm_client']
     if 'text' in data and 'user' in data:
         hello.hello(data, web_client)
 
