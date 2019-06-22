@@ -1,6 +1,8 @@
 import slack
 import yaml
 
+#import hello
+from hello import hello
 
 with open('conf/conf.yaml', 'r') as conf_yaml:
     bot_conf = yaml.load(conf_yaml)
@@ -14,18 +16,10 @@ def say_hello(**payload):
     print(data)
     print("="*80)
     web_client = payload['web_client']
-    # rtm_client = payload['rtm_client']
-    if 'text' in data:
-        if 'hello' in data['text']:
-            channel_id = data['channel']
-            thread_ts = data['ts']
-            user = data['user']
+    rtm_client = payload['rtm_client']
+    if 'text' in data and 'user' in data:
+        hello.hello(data, web_client)
 
-            web_client.chat_postMessage(
-                channel=channel_id,
-                text=f"Hello <@{user}>!",
-                thread_ts=thread_ts
-            )
 
 rtm_client = slack.RTMClient(token=slack_token)
 rtm_client.start()
