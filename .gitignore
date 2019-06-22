@@ -8,5 +8,9 @@ conf/*.yml
 conf/*.yaml
 
 env3/
+env/
 .idea/
 .vscode
+
+__pycache__/
+*.py[cod]
