@@ -1,88 +1,41 @@
-import time
-from slackclient import SlackClient
+#!/usr/bin/env python3
+
+import slack
 import yaml
-import json
 
-
-users_ids_dict = dict()
-users_dict= dict()
-
-out = dict()
+from hello import hello, ip_calc
 
 with open('conf/conf.yaml', 'r') as conf_yaml:
     bot_conf = yaml.load(conf_yaml)
 
 slack_token = bot_conf['slack']['slack_token']
-
-sc = SlackClient(slack_token)
-
-if sc.rtm_connect(with_team_state=False, auto_reconnect=True):
-    while sc.server.connected is True:
-        for item in sc.rtm_read():
-            print(item)
-            if 'user' in item:
-                print('user:', item['user'])
-                user = sc.api_call("users.info", user=item['user'])
-                users_ids_dict[item['user']] = {'name': user['user']['name'],
-                                            'tz': user['user']['tz'],
-                                            'tz_offset': user['user']['tz_offset']}
-                users_dict[user['user']['name']] = {'id': item['user'],
-                                            'tz': user['user']['tz'],
-                                            'tz_offset': user['user']['tz_offset']}
-                print(users_ids_dict)
-                print(users_dict)
-#                print(user['user']['name'])
-                '''
-                    'user': 
-                        {'tz_offset': 10800, 
-                        'tz_label': 'Moscow Time',
-                        'is_ultra_restricted': False, 
-                        'name': 'vensder', 
-                        'profile': 
-                            {
-                            }, 
-                        'real_name': 'Foo Bar', 
-                        'is_bot': False, 
-                        'is_restricted': False, 
-                        'color': '9f69e7', 
-                        'id': 'FOOBARFOO', 
-                        'is_owner': True, 
-                        'is_admin': True, 
-                        'is_primary_owner': True, 
-                        'is_app_user': False, 
-                        'deleted': False, 
-                        'tz': 'Europe/Moscow', 
-                        'team_id': 'BAARFOO', 
-                        'updated': 1534759036},
-                'ok': True}'''
-
-        time.sleep(1)
-else:
-    print("Connection Failed")
+client = slack.WebClient(token=slack_token)
+response = client.auth_test() 
+bot_user_id = response.data['user_id']
 
 
-if len(out) == 0:
-    out = sc.api_call('users.list')
+@slack.RTMClient.run_on(event='hello')
+def hello_event(**payload):
+    global bot_user_id
+    web_client = payload['web_client']
+    print('hello event')
+    print(bot_user_id)
+    users_info = web_client.users_info(user=bot_user_id)
+    print(users_info)
 
-for member in out['members']:
-    print(member['name'])
-'''
-vensder
-jenkins-slack-bot
-python-bot
-onebar
-dmitrii_makarov
-slackbot
-'''
 
-for member in out['members']:
-    print(member['name'], member['is_bot'], member['deleted'])
+@slack.RTMClient.run_on(event='message')
+def say_hello(**payload):
+    global bot_user_id
+    data = payload['data']
+    print(data)
+    print("="*80)
+    web_client = payload['web_client']
+    rtm_client = payload['rtm_client']
+    if ('text' in data) and ('user' in data) and (f"<@{bot_user_id}>" in data['text']):
+        hello.hello(data, web_client)
+        ip_calc.ip_calc(data, web_client, bot_user_id)
 
-'''
-vensder False False
-jenkins-slack-bot True False
-python-bot True False
-onebar True True
-dmitrii_makarov False False
-slackbot False False
-'''
+
+rtm_client = slack.RTMClient(token=slack_token)
+rtm_client.start()
