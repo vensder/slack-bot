@@ -6,7 +6,7 @@ import yaml
 from hello import hello, ip_calc
 
 with open('conf/conf.yaml', 'r') as conf_yaml:
-    bot_conf = yaml.load(conf_yaml)
+    bot_conf = yaml.safe_load(conf_yaml)
 
 slack_token = bot_conf['slack']['slack_token']
 client = slack.WebClient(token=slack_token)
