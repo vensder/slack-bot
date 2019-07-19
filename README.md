@@ -1,4 +1,4 @@
-# Python Slack Bots
+# Python Slack Bot
 
 
 ```bash
