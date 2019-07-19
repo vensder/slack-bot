@@ -1,0 +1,13 @@
+Dockerfile
+.dockerignore
+.git
+.gitignore
+.gitkeep
+*/.gitkeep
+**/.gitkeep
+.vscode
+env3
+conf/conf.yaml
+.yml
+*/*.yml
+**/*.yml
