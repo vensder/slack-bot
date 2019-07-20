@@ -2,13 +2,17 @@
 
 import slack
 import yaml
+from os import getenv
 
 from plugins import hello, ip_calc, ssl_expiry
 
-with open('conf/conf.yaml', 'r') as conf_yaml:
-    bot_conf = yaml.safe_load(conf_yaml)
+slack_token = getenv('SLACK_TOKEN')
 
-slack_token = bot_conf['slack']['slack_token']
+if not slack_token:
+    with open('conf/conf.yaml', 'r') as conf_yaml:
+        bot_conf = yaml.safe_load(conf_yaml)
+    slack_token = bot_conf['slack']['slack_token']
+
 bot_user_id = ''
 
 
@@ -32,7 +36,7 @@ def load_plugins(**payload):
     print("="*80)
     web_client = payload['web_client']
     rtm_client = payload['rtm_client']
-    if ('text' in data) and ('user' in data) and (f"<@{bot_user_id}>" in data['text']):
+    if ('text' in data) and ('user' in data) and (f'<@{bot_user_id}>' in data['text']):
         hello.hello(data, web_client)
         ip_calc.ip_calc(data, web_client, bot_user_id)
         ssl_expiry.ssl_expiry(data, web_client, bot_user_id)
