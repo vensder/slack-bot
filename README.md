@@ -12,7 +12,7 @@ Put slack token to the file conf/conf.yaml and run:
 docker run -d -v "$PWD"/conf:/usr/src/app/conf slackbot
 ```
 
-Also you can use pass slack token via Environment varalbe, using env file for docker container:
+Also you can pass slack token via Environment varialbe, using env file for docker container:
 
 ```bash
 docker run -d --env-file ./env.list slackbot
