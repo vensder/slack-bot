@@ -6,13 +6,7 @@ Build container locally:
 docker build -t slackbot .
 ```
 
-Put slack token to the file conf/conf.yaml and run:
-
-```bash
-docker run -d -v "$PWD"/conf:/usr/src/app/conf slackbot
-```
-
-Also you can pass slack token via Environment varialbe, using env file for docker container:
+Pass slack token via Environment varialbe, using env file for docker container:
 
 ```bash
 cat env.list

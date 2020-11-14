@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 
 import slack
-import yaml
 from os import getenv
 
 from plugins import hello, ip_calc, ssl_expiry
 
 slack_token = getenv('SLACK_TOKEN')
 
-if not slack_token:
-    with open('conf/conf.yaml', 'r') as conf_yaml:
-        bot_conf = yaml.safe_load(conf_yaml)
-    slack_token = bot_conf['slack']['slack_token']
 
 bot_user_id = ''
 
