@@ -1,6 +1,14 @@
 # Python Slack Bot
 
-Build container locally:
+This Slack bot has two plugins. One of them helps to check the SSL certificate expiring for any accessible domain. Just send the message in the channel where the bot is invited like that:
+
+`@botname !ssl date google.com`
+
+Another plugin helps you to use IP calculator to check the IP addresses range, and so on. Just send the message to the bot like this:
+
+`@botname !ipcalc 10.0.0.0/24`
+
+Build image locally:
 
 ```bash
 docker build -t slackbot .
