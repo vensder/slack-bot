@@ -9,7 +9,7 @@ ipcalc==1.99.0
 multidict==5.0.2
 pycparser==2.20
 pyOpenSSL==19.1.0
-PyYAML==5.1.1
+PyYAML==5.4
 six==1.15.0
 slackclient==2.9.3
 typing-extensions==3.7.4.3
